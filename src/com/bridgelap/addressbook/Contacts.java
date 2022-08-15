@@ -6,7 +6,7 @@ public class Contacts {
     String address;
     String city;
     String state;
-    int zipCode;
+
     long phoneNumber;
     String email;
 
@@ -14,13 +14,13 @@ public class Contacts {
     }
 
 
-    public Contacts(String firstName, String lastName, String address, String city, String state, int zipCode, long phoneNumber, String email) {
+    public Contacts(String firstName, String lastName, String address, String city, String state, long phoneNumber, String email) {
             this.firstName = firstName;
             this.lastName = lastName;
             this.address = address;
             this.city = city;
             this.state = state;
-            this.zipCode = zipCode;
+
             this.phoneNumber = phoneNumber;
             this.email = email;
         }
@@ -74,7 +74,6 @@ public class Contacts {
                             ", address='" + address + '\'' +
                             ", city='" + city + '\'' +
                             ", state='" + state + '\'' +
-                            ", zip=" + zipCode +
                             ", phoneNumber=" + phoneNumber +
                             ", email='" + email + '\'' +
                             '}';
