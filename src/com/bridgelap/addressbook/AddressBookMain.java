@@ -4,21 +4,16 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class AddressBookMain {
+    static Scanner scr = new Scanner(System.in);
+    static HashMap<String, AddressBook> map = new HashMap<>();
+    static String currentAddressBook;
+    static String addressBookName;
+
     public static void main(String[] args) {
         System.out.println("Welcome to Address Book");
-        HashMap<String, AddressBook> map = new HashMap<>();
-        Scanner scr = new Scanner(System.in);
-        AddressBook add = new AddressBook();
-        boolean exit = true;
+
+        boolean exit = false;
         while (exit) {
-            AddressBook add = new AddressBook();
-            System.out.println("Enter address book name");
-            String addressBookName = scr.next().toLowerCase();
-            if (map.containsKey(addressBookName)) {
-                System.out.println("address book already exist");
-            } else {
-                map.put(addressBookName, add);
-            }
 
             System.out.println("""
                     Enter options:
@@ -26,32 +21,89 @@ public class AddressBookMain {
                     2) To edit Contact
                     3) To display Contacts
                     4) To delete contact
-                    5) To exit""");
+                    5) To add address book or select addressBook
+                    6) To exit""");
             int option = scr.nextInt();
             switch (option) {
                 case 1:
-                    map.get(addressBookName).addContact();
+                    try {
+                        map.get(currentAddressBook).addContact();
+                    } catch (Exception e) {
+                        System.out.println("\nNo AddressBook Found\n");
+                    }
+
                     break;
                 case 2:
-                    map.get(addressBookName).editContact();
+                    try {
+                        map.get(currentAddressBook).editContact();
+                    } catch (Exception e) {
+                        System.out.println("\nNo AddressBook Found\n");
+                    }
                     break;
                 case 3:
-                    map.get(addressBookName).displayContacts();
+                    try {
+                        map.get(currentAddressBook).displayContacts();
+                    } catch (Exception e) {
+                        System.out.println("\nNo AddressBook Found\n");
+                    }
                     break;
                 case 4:
-                    map.get(addressBookName).deleteContact();
+                    try {
+                        map.get(currentAddressBook).deleteContact();
+                    } catch (Exception e) {
+                        System.out.println("\nNo AddressBook Found\n");
+                    }
                     break;
                 case 5:
-                    exit = false;
+                    chooseAddressBook();
                     break;
                 case 6:
+                    exit = true;
+                    break;
                 default:
                     break;
             }
         }
         System.out.println(map);
     }
-}
+
+
+    static void chooseAddressBook() {
+        System.out.println("""
+                Press 1 to add AddressBook
+                Press 2 to select AddressBook""");
+
+        int option = scr.nextInt();
+        switch (option) {
+            case 1:
+                System.out.println("Enter address book name");
+                addressBookName = scr.next().toLowerCase();
+                if (map.containsKey(addressBookName)) {
+                    System.out.println("\nAddress book already exist\n");
+                    chooseAddressBook();
+                } else {
+                    AddressBook addressBook = new AddressBook();
+                    map.put(addressBookName, addressBook);
+                    currentAddressBook = addressBookName;
+                    break;
+                }
+                    case 2:
+                        System.out.println("Enter address book name");
+                        addressBookName = scr.next().toLowerCase();
+                        if (!map.containsKey(addressBookName)) {
+                            System.out.println("\nAddressBook not Found\n");
+                            chooseAddressBook();
+                        } else
+                            currentAddressBook = addressBookName;
+                            break;
+                            default:
+                                break;
+
+
+                        }
+                }
+        }
+
 
 
 
