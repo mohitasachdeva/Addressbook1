@@ -7,6 +7,12 @@ public class AddressBook {
    // Contacts contact = new Contacts();
    ArrayList<Contacts> list = new ArrayList<>();
     Scanner scr = new Scanner(System.in);
+    @Override
+    public String toString() {
+        return "AddressBook{" +
+                "list=" + list +
+                '}';
+    }
 
     void addContact(){
         Contacts contact = new Contacts();
@@ -64,24 +70,32 @@ public class AddressBook {
 
         }
     }
-    void deleteContact(){
-        System.out.println("Enter the first name of person to edit");
-        String firstName = scr.next().toLowerCase();
+    void deleteContact() {
+        if (list.isEmpty()) {
+            System.out.println("Address book is empty");
+        } else {
+            System.out.println("Enter the first name of person to delete");
+            String firstName = scr.next().toLowerCase();
+            System.out.println("Enter the last name of person to delete");
+            String lastName = scr.next().toLowerCase();
             boolean found = false;
-            for (Contacts contact : list){
-        if (firstName.equals(contact.getFirstName().toLowerCase())){
-            list.remove(contact);
-            found = true;
-            System.out.println("Contact deleted successfully");
-            break;
-        }
+            for (Contacts contact : list) {
+                if (firstName.equals(contact.getFirstName().toLowerCase())) {
+                    if (lastName.equals(contact.getLastName())) {
+                        list.remove(contact);
+                        found = true;
+                        System.out.println("Contact deleted successfully");
+                        break;
+                    }
+                }
             }
-            if (!found){
+
+
+            if (!found) {
                 System.out.println("No contact found");
             }
         }
-
-
+    }
 
     Contacts display(){
         if(list.isEmpty()){
@@ -92,6 +106,7 @@ public class AddressBook {
                 System.out.println(contact);
             }
         }
+        return null;
     }
 }
 
