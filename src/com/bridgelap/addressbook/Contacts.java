@@ -7,14 +7,14 @@ public class Contacts {
     String city;
     String state;
 
-    long phoneNumber;
+    String phoneNumber;
     String email;
 
     public Contacts() {
     }
 
 
-    public Contacts(String firstName, String lastName, String address, String city, String state, long phoneNumber, String email) {
+    public Contacts(String firstName, String lastName, String address, String city, String state, String phoneNumber, String email) {
             this.firstName = firstName;
             this.lastName = lastName;
             this.address = address;
@@ -54,10 +54,10 @@ public class Contacts {
         public void setState(String state) {
             this.state = state;
         }
-        public long getPhoneNumber() {
+        public String getPhoneNumber() {
                     return phoneNumber;
                 }
-                public void setPhoneNumber(long phoneNumber) {
+                public void setPhoneNumber(String phoneNumber) {
                     this.phoneNumber = phoneNumber;
                 }
                 public String getEmail() {
