@@ -1,28 +1,31 @@
 package com.bridgelap.addressbook;
 
-import java.util.HashMap;
-import java.util.Scanner;
+import java.util.*;
 
 public class AddressBookMain {
     static Scanner scr = new Scanner(System.in);
+    static AddressBook addressBook;
     static HashMap<String, AddressBook> map = new HashMap<>();
+    public static ArrayList<String>  addressBooks = new ArrayList<>();
     static String currentAddressBook;
     static String addressBookName;
 
     public static void main(String[] args) {
-        System.out.println("Welcome to Address Book");
+
+        System.out.println("Welcome to Address Book Program");
 
         boolean exit = false;
-        while (exit) {
-
+        while (!exit) {
             System.out.println("""
-                    Enter options:
+                    \nEnter options:
                     1) To add contact
                     2) To edit Contact
-                    3) To display Contacts
+                    3) To view Contacts
                     4) To delete contact
                     5) To add address book or select addressBook
-                    6) To exit""");
+                    6) To search contact
+                    7) To exit""");
+
             int option = scr.nextInt();
             switch (option) {
                 case 1:
@@ -42,7 +45,7 @@ public class AddressBookMain {
                     break;
                 case 3:
                     try {
-                        map.get(currentAddressBook).displayContacts();
+                        addressBook.displayContacts();
                     } catch (Exception e) {
                         System.out.println("\nNo AddressBook Found\n");
                     }
@@ -58,20 +61,26 @@ public class AddressBookMain {
                     chooseAddressBook();
                     break;
                 case 6:
+                    try {
+                        addressBook.searchContact();
+                    } catch (Exception e) {
+                        System.out.println("\nNo AddressBook Found\n");
+                    }
+                    break;
+                case 7:
                     exit = true;
                     break;
                 default:
                     break;
             }
         }
-        System.out.println(map);
+        System.out.println(addressBooks);
     }
-
 
     static void chooseAddressBook() {
         System.out.println("""
-                Press 1 to add AddressBook
-                Press 2 to select AddressBook""");
+        Press 1 to add AddressBook
+        Press 2 to select AddressBook""");
 
         int option = scr.nextInt();
         switch (option) {
@@ -82,28 +91,26 @@ public class AddressBookMain {
                     System.out.println("\nAddress book already exist\n");
                     chooseAddressBook();
                 } else {
-                    AddressBook addressBook = new AddressBook();
+                    addressBook = new AddressBook();
                     map.put(addressBookName, addressBook);
                     currentAddressBook = addressBookName;
-                    break;
                 }
-                    case 2:
-                        System.out.println("Enter address book name");
-                        addressBookName = scr.next().toLowerCase();
-                        if (!map.containsKey(addressBookName)) {
-                            System.out.println("\nAddressBook not Found\n");
-                            chooseAddressBook();
-                        } else
-                            currentAddressBook = addressBookName;
-                            break;
-                            default:
-                                break;
-
-
-                        }
-                }
+                addressBooks.add(addressBookName);
+                break;
+            case 2:
+                System.out.println("Enter address book name");
+                addressBookName = scr.next().toLowerCase();
+                if (!map.containsKey(addressBookName)) {
+                    System.out.println("\nAddressBook not Found\n");
+                    chooseAddressBook();
+                } else
+                    currentAddressBook = addressBookName;
+                break;
+            default:
+                break;
         }
-
+    }
+}
 
 
 
