@@ -6,7 +6,7 @@ public class AddressBookMain {
     static Scanner scr = new Scanner(System.in);
     static AddressBook addressBook;
     static HashMap<String, AddressBook> map = new HashMap<>();
-    public static ArrayList<String>  addressBooks = new ArrayList<>();
+    public static ArrayList<String> addressBooks = new ArrayList<>();
     static String currentAddressBook;
     static String addressBookName;
 
@@ -79,8 +79,8 @@ public class AddressBookMain {
 
     static void chooseAddressBook() {
         System.out.println("""
-        Press 1 to add AddressBook
-        Press 2 to select AddressBook""");
+                Press 1 to add AddressBook
+                Press 2 to select AddressBook""");
 
         int option = scr.nextInt();
         switch (option) {

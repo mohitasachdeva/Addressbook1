@@ -36,16 +36,14 @@ public class AddressBook {
         System.out.print("Enter address:  ");
         scr.nextLine();
         contact.setAddress(scr.nextLine());
-
+        System.out.print("Enter Zipcode: ");
+        contact.setZip(scr.next());
         System.out.print("Enter phone Number: ");
         contact.setPhoneNumber(scr.next());
         System.out.print("Enter email address: ");
         contact.setEmail(scr.next());
         list.add(contact);
-//                cityDictionary.put(contact,contact.getCity());
-//                stateDictionary.put(contact,contact.getState());
     }
-
 
 
     void editContact(){
@@ -85,7 +83,8 @@ public class AddressBook {
                         System.out.print("Enter city: ");
                         contact.setCity(scr.next());
 
-
+                        System.out.print("Enter zip: ");
+                        contact.setZip(scr.next());
                         found = true;
                         break;
                     }
@@ -200,6 +199,7 @@ public class AddressBook {
                             }
                         }
                     }
+                    System.out.println("No of contacts in city "+city+" are "+cityDictionary.size());
                     System.out.println("Contacts in city "+city+" are:");
                     System.out.println(cityDictionary.keySet());
                     break;
@@ -213,6 +213,7 @@ public class AddressBook {
                             }
                         }
                     }
+                    System.out.println("No of contacts in state "+state+" are "+stateDictionary.size());
                     System.out.println("Contacts in state "+state+" are:");
                     System.out.println(stateDictionary.keySet());
                     break;
