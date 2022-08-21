@@ -1,0 +1,4 @@
+Mohita
+Contacts{firstName='Mohita', lastName='Khurana', address='param', city='abc', state='sd', zip=fdr, phoneNumber=25, email='@34'}
+
+Contacts{firstName='maisha', lastName='khurana', address='asd', city='asds', state='ad', zip=sad, phoneNumber=sad, email='sadsa'}
