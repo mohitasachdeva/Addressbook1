@@ -1,169 +1,202 @@
 package com.bridgelap.addressbook;
+import com.bridgelap.addressbook.Contacts;
 
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
 
 public class AddressBook {
-   // Contacts contact = new Contacts();
-   ArrayList<Contacts> list = new ArrayList<>();
-    Scanner scr = new Scanner(System.in);
+
+    ArrayList<Contacts> list = new ArrayList<>();
+    Scanner scanner = new Scanner(System.in);
 
 
     void addContact() {
         System.out.println("Enter the first name");
-        String firstName = scr.next().toLowerCase();
+        String firstName = scanner.next().toLowerCase();
         System.out.println("Enter the last name");
-        String lastName = scr.next().toLowerCase();
-        for (Contacts contacts : list) {
-            if ((contacts.getFirstName().toLowerCase().equals(firstName)) && (contacts.getLastName().toLowerCase().equals(lastName))) {
-                System.out.println("Contact already exist!!!");
-                return;
-            }
-            Contacts contact = new Contacts();
-            System.out.println("Enter first name");
-            contact.setFirstName(scr.next());
-            System.out.println("Enter last name");
-            contact.setLastName(scr.next());
-            System.out.println("Enter city");
-            contact.setCity(scr.next());
-            System.out.println("Enter state");
-            contact.setState(scr.next());
-            System.out.print("Enter address:  ");
-            scr.nextLine();
-            contact.setAddress(scr.nextLine());
-            System.out.println("Enter phone Number");
-            contact.setPhoneNumber(String.valueOf(scr.nextLong()));
-            System.out.println("Enter email address");
-            contact.setEmail(scr.next());
-            list.add(contact);
-
+        String lastName = scanner.next().toLowerCase();
+        if (list.stream().anyMatch(x -> x.getFirstName().toLowerCase().equals(firstName) && x.getLastName().toLowerCase().equals(lastName))) {
+            System.out.println("Contact already exist!!!");
+            return;
         }
+        Contacts contact = new Contacts();
+        contact.setFirstName(firstName);
+        contact.setLastName(lastName);
+        System.out.print("Enter city: ");
+        contact.setCity(scanner.next());
+        System.out.print("Enter state: ");
+        contact.setState(scanner.next());
+        System.out.print("Enter address:  ");
+        scanner.nextLine();
+        contact.setAddress(scanner.nextLine());
+        System.out.print("Enter Zipcode: ");
+        contact.setZip(scanner.next());
+        System.out.print("Enter phone Number: ");
+        contact.setPhoneNumber(scanner.next());
+        System.out.print("Enter email address: ");
+        contact.setEmail(scanner.next());
+        list.add(contact);
     }
-    void editContact() {
-        if (list.isEmpty()) {
+
+
+    void editContact(){
+        if(list.isEmpty()){
             System.out.println("Address book is empty");
-        } else {
+        }
+        else {
             System.out.println("Enter the first name of person to edit");
-            String firstName = scr.next().toLowerCase();
+            String firstName = scanner.next().toLowerCase();
             System.out.println("Enter the last name of person to edit");
-            String lastName = scr.next().toLowerCase();
+            String lastName = scanner.next().toLowerCase();
+
             boolean found = false;
             for (Contacts contact : list) {
                 if (firstName.equals(contact.getFirstName().toLowerCase())) {
-                    System.out.println("Edit the details of person");
-                    System.out.println("Enter first name");
-                    contact.setFirstName(scr.next());
+                    if (lastName.equals(contact.getLastName())) {
+                        System.out.println("Edit the details of person");
+                        System.out.print("Enter first name: ");
+                        contact.setFirstName(scanner.next());
 
-                    System.out.println("Enter last Name");
-                    contact.setLastName(scr.next());
+                        System.out.print("Enter last Name: ");
+                        contact.setLastName(scanner.next());
 
-                    System.out.println("Enter Email");
-                    contact.setEmail(scr.next());
+                        System.out.print("Enter Email: ");
+                        contact.setEmail(scanner.next());
 
-                    System.out.print("Enter address:  ");
-                    scr.nextLine();
-                    contact.setAddress(scr.nextLine());
+                        System.out.print("Enter address: ");
+                        scanner.nextLine();
+                        contact.setAddress(scanner.nextLine());
 
-                    System.out.println("Enter phone number");
-                    contact.setPhoneNumber(String.valueOf(scr.nextLong()));
+                        System.out.print("Enter phone number: ");
+                        contact.setPhoneNumber(scanner.next());
 
-                    System.out.println("Enter state");
-                    contact.setState(scr.next());
+                        System.out.print("Enter state: ");
+                        contact.setState(scanner.next());
 
-                    System.out.println("Enter city");
-                    contact.setCity(scr.next());
-                    found = true;
-                    break;
+                        System.out.print("Enter city: ");
+                        contact.setCity(scanner.next());
+
+                        System.out.print("Enter zip: ");
+                        contact.setZip(scanner.next());
+                        found = true;
+                        break;
+                    }
+
                 }
-
             }
-
-
             if (!found) {
                 System.out.println("No contact found");
             }
         }
     }
-    void searchContact(){
+
+
+    void displayContact(){
         if(list.isEmpty()){
             System.out.println("No contacts to search in the addressBook");
+            return;
+        }
+
+        list.sort(Comparator.comparing(Contacts::getFirstName));
+        list.forEach(System.out::println);
+    }
+
+
+    void deleteContact(){
+        if(list.isEmpty()){
+            System.out.println("Address book is empty");
+        }
+        else {
+            System.out.println("Enter the first name of person to delete");
+            String firstName = scanner.next().toLowerCase();
+            System.out.println("Enter the last name of person to delete");
+            String lastName = scanner.next().toLowerCase();
+            boolean found = false;
+            for (Contacts contact :list){
+                if (firstName.equals(contact.getFirstName().toLowerCase())) {
+                    if (lastName.equals(contact.getLastName())) {
+                        list.remove(contact);
+                        found = true;
+                        System.out.println("Contact deleted successfully");
+                        break;
+                    }
+                }
+            }
+            if (!found){
+                System.out.println("No contact found");
+            }
+        }
+    }
+
+
+    void viewContacts(){
+        if(list.isEmpty()){
+            System.out.println("No contacts to display");
             return;
         }
         boolean exit = false;
         while(!exit) {
             System.out.println("""
-                Enter option
-                1) To search by City
-                2) To search by State
-                3) To exit
-                """);
-            int option = scr.nextInt();
+                    Enter option
+                    1) To view by City
+                    2) To view by State
+                    3) To exit
+                    """);
+            int option = scanner.nextInt();
 
             switch (option) {
                 case 1:
-                    System.out.println("Enter the city to search contacts");
-                    String city = scr.next().toLowerCase();
-                    for (Contacts contacts : list) {
-                        if (contacts.getCity().toLowerCase().contains(city)) {
-                            System.out.println(contacts);
+                    System.out.println("Enter the city name to view");
+                    String city = scanner.next().toLowerCase();
+                    Map<String,List<Contacts>> cityDictionary  = new HashMap<>();
+                    for (AddressBook addressBooks : AddressBookMain.map.values()) {
+                        List<Contacts> contactsCityList = addressBooks.list.stream().filter(x -> x.getCity().toLowerCase().equals(city)).collect(Collectors.toList());
+                        if(cityDictionary.containsKey(city)){
+                            cityDictionary.get(city).addAll(contactsCityList);
                         }
+                        else
+                            cityDictionary.put(city,contactsCityList);
                     }
+
+                    System.out.println("No of contacts in city "+city+" are "+cityDictionary.size());
+                    System.out.println("Contacts in city "+city+" are:");
+                    cityDictionary.values().forEach(System.out::println);
                     break;
                 case 2:
-                    System.out.println("Enter the city to search contacts");
-                    String state = scr.next().toLowerCase();
-                    for (Contacts contacts : list) {
-                        if (contacts.getState().toLowerCase().contains(state)) {
-                            System.out.println(contacts);
+                    System.out.println("Enter the state name to view");
+                    String state = scanner.next().toLowerCase();
+                    Map<String,List<Contacts>> stateDictionary  = new HashMap<>();
+                    for (AddressBook addressBooks : AddressBookMain.map.values()) {
+                        List<Contacts> contactsStateList = addressBooks.list.stream().filter(x -> x.getState().toLowerCase().equals(state)).collect(Collectors.toList());
+                        if (stateDictionary.containsKey(state)) {
+
+                            stateDictionary.get(state).addAll(contactsStateList);
                         }
+                        else
+                            stateDictionary.put(state,contactsStateList);
                     }
+
+                    System.out.println("No of contacts in state "+state+" are "+stateDictionary.size());
+                    System.out.println("Contacts in state "+state+" are:");
+                    System.out.println(stateDictionary.values());
                     break;
                 case 3:
                     exit = true;
                     break;
                 default:
                     break;
+
             }
         }
     }
 
-    void deleteContact () {
-                    if (list.isEmpty()) {
-                        System.out.println("Address book is empty");
-                    } else {
-                        System.out.println("Enter the first name of person to delete");
-                        String firstName = scr.next().toLowerCase();
-                        System.out.println("Enter the last name of person to delete");
-                        String lastName = scr.next().toLowerCase();
-                        boolean found = false;
-                        for (Contacts contact : list) {
-                            if (firstName.equals(contact.getFirstName().toLowerCase())) {
-                                if (lastName.equals(contact.getLastName())) {
-                                    list.remove(contact);
-                                    found = true;
-                                    System.out.println("Contact deleted successfully");
-                                    break;
-                                }
-                            }
-                        }
+    @Override
+    public String toString() {
+        return  list +
+                "}\n";
+    }
 
 
-                        if (!found) {
-                            System.out.println("No contact found");
-                        }
-                    }
-                }
-                Contacts display () {
-                    if (list.isEmpty()) {
-                        System.out.println("No contacts to display");
-                    } else {
-                        for (Contacts contact : list) {
-                            System.out.println(contact);
-                        }
-                    }
-                    return null;
-                }
-            }
+}
 
 
 
