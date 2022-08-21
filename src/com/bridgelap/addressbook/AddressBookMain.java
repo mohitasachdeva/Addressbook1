@@ -6,7 +6,7 @@ public class AddressBookMain {
     static Scanner scr = new Scanner(System.in);
     static AddressBook addressBook;
     static HashMap<String, AddressBook> map = new HashMap<>();
-    public static ArrayList<String> addressBooks = new ArrayList<>();
+    public static ArrayList<String>  addressBooks = new ArrayList<>();
     static String currentAddressBook;
     static String addressBookName;
 
@@ -20,10 +20,10 @@ public class AddressBookMain {
                     \nEnter options:
                     1) To add contact
                     2) To edit Contact
-                    3) To view Contacts
+                    3) To view Contacts by city or state across all addressBooks
                     4) To delete contact
                     5) To add address book or select addressBook
-                    6) To search contact
+                    6) To view contact in current addressBook
                     7) To exit""");
 
             int option = scr.nextInt();
@@ -45,7 +45,7 @@ public class AddressBookMain {
                     break;
                 case 3:
                     try {
-                        addressBook.displayContacts();
+                        addressBook.viewContacts();
                     } catch (Exception e) {
                         System.out.println("\nNo AddressBook Found\n");
                     }
@@ -62,7 +62,7 @@ public class AddressBookMain {
                     break;
                 case 6:
                     try {
-                        addressBook.searchContact();
+                        map.get(currentAddressBook).displayContact();
                     } catch (Exception e) {
                         System.out.println("\nNo AddressBook Found\n");
                     }
@@ -79,8 +79,8 @@ public class AddressBookMain {
 
     static void chooseAddressBook() {
         System.out.println("""
-                Press 1 to add AddressBook
-                Press 2 to select AddressBook""");
+        Press 1 to add AddressBook
+        Press 2 to select AddressBook""");
 
         int option = scr.nextInt();
         switch (option) {
