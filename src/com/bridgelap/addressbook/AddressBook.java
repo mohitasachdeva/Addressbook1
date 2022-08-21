@@ -188,6 +188,33 @@ public class AddressBook {
             }
         }
     }
+    void sortByCity(){
+        if (list.isEmpty()) {
+            System.out.println("No contacts in the addressBook");
+            return;
+        }
+        list.sort(Comparator.comparing(Contacts::getCity));
+        list.forEach(System.out::println);
+    }
+
+    void sortByState(){
+        if (list.isEmpty()) {
+            System.out.println("No contacts in the addressBook");
+            return;
+        }
+        list.sort(Comparator.comparing(Contacts::getState));
+        list.forEach(System.out::println);
+    }
+
+    void sortByZipCode(){
+        if (list.isEmpty()) {
+            System.out.println("No contacts in the addressBook");
+            return;
+        }
+        list.sort(Comparator.comparing(Contacts::getZip));
+        list.forEach(System.out::println);
+    }
+
 
     @Override
     public String toString() {
